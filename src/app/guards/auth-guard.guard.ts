@@ -1,16 +1,20 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { JwtService } from '../services/jwt/jwt.service';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router);
-  const jwtService = inject(JwtService);
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(private router: Router) {}
 
-  const isAuthenticated = jwtService.isAuthenticated();
+  canActivate(): boolean {
+    const token = localStorage.getItem('jwt-token');
 
-  if (!isAuthenticated) {
-    router.navigate(['/login']);
-    return false; // Retorna falso diretamente
+    if (token) {
+      return true;
+    }
+
+    this.router.navigate(['/login']);
+    return false;
   }
-  return true; // Retorna verdadeiro diretamente
-};
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,13 +8,26 @@ import { Router } from '@angular/router';
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
-export class MainComponent {
-  constructor(private _router: Router) { }
+export class MainComponent implements OnInit {
+  horarios: string[] = [
+    '09:00 - 09:30',
+    '09:30 - 10:00',
+    '10:00 - 10:30',
+    '10:30 - 11:00',
+    '11:00 - 11:30',
+    '14:00 - 14:30',
+    '14:30 - 15:00',
+    '15:00 - 15:30',
+    '15:30 - 16:00',
+  ];
 
-  logout() {
+  constructor(private _router: Router) {}
+
+  ngOnInit(): void {}
+
+
+  logout(): void {
     localStorage.clear();
     this._router.navigate(['/login']);
   }
-
-
 }

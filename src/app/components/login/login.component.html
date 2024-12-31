@@ -9,24 +9,45 @@
   <!-- Sobreposição escura -->
   <div class="absolute inset-0 bg-black bg-opacity-90"></div>
 
+  <!-- Logo -->
+  <div class="absolute top-8">
+    <img
+    src="assets/logoze.jpg"
+    alt="Fundo"
+    class="inset-0 w-full h-full object-cover rounded-3xl"
+  />
+  </div>
+
   <!-- Conteúdo principal -->
-  <div class="relative w-full max-w-sm bg-slate-950 rounded-lg shadow-md p-6">
-    <h2 class="text-2xl font-bold text-yellow-500 text-center mb-4">Faça Login</h2>
+  <div class="relative w-full max-w-sm bg-slate-950 rounded-lg shadow-md p-6 mt-12">
+    <h2 class="text-2xl font-bold text-red-500 text-center mb-4">Faça Login</h2>
     <p class="text-sm text-gray-300 text-center mb-6">Entre para continuar</p>
 
-    <form  class="space-y-4">
+    <!-- Exibe loader enquanto processa login -->
+    <div *ngIf="loading" class="flex justify-center items-center h-12 mb-6">
+      <div class="spinner-border animate-spin rounded-full h-10 w-10 border-t-4 border-red-600"></div>
+    </div>
+
+    <!-- Formulário de Login -->
+    <form *ngIf="!loading" [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-4">
       <!-- Campo de Email -->
       <div>
         <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
         <input
           type="email"
           id="email"
-
-          name="email"
-          required
-          class="w-full mt-1 px-4 py-2 border border-gray-700 rounded-lg focus:ring focus:ring-yellow-500 bg-slate-800 text-gray-300"
+          formControlName="email"
+          [ngClass]="{
+            'border-green-500 bg-green-100': email?.valid && (email?.dirty || email?.touched),
+            'border-red-500 bg-red-100': email?.invalid && (email?.dirty || email?.touched)
+          }"
+          class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring  bg-slate-800 text-gray-300"
           placeholder="seuemail@exemplo.com"
         />
+        <div *ngIf="formSubmitted && email?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="email?.errors?.['required']">Email é obrigatório.</span>
+          <span *ngIf="email?.errors?.['email']">Email inválido.</span>
+        </div>
       </div>
 
       <!-- Campo de Senha -->
@@ -35,18 +56,24 @@
         <input
           type="password"
           id="password"
-
-          name="password"
-          required
-          class="w-full mt-1 px-4 py-2 border border-gray-700 rounded-lg focus:ring focus:ring-yellow-500 bg-slate-800 text-gray-300"
+          formControlName="password"
+          [ngClass]="{
+            'border-green-500 bg-green-100': password?.valid && (password?.dirty || password?.touched),
+            'border-red-500 bg-red-100': password?.invalid && (password?.dirty || password?.touched)
+          }"
+          class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring  bg-slate-800 text-gray-300"
           placeholder="********"
         />
+        <div *ngIf="formSubmitted && password?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="password?.errors?.['required']">Senha é obrigatória.</span>
+          <span *ngIf="password?.errors?.['minlength']">Senha precisa ter pelo menos 6 caracteres.</span>
+        </div>
       </div>
 
       <!-- Botão de Login -->
       <button
         type="submit"
-        class="w-full bg-yellow-500 text-black py-2 rounded-lg hover:bg-yellow-600 transition"
+        class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
       >
         Login
       </button>
@@ -55,7 +82,7 @@
     <!-- Link para Registro -->
     <p class="text-center text-sm text-gray-300 mt-4">
       Não tem uma conta?
-      <a (click)="goToRegister()" class="text-yellow-500 hover:underline cursor-pointer">Registre-se</a>
+      <a (click)="goToRegister()" class="text-red-500 hover:underline cursor-pointer">Registre-se</a>
     </p>
   </div>
 </div>
