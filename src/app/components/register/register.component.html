@@ -1,0 +1,104 @@
+<div class="relative min-h-screen flex flex-col items-center justify-center">
+  <img
+    src="assets/fundo2.png"
+    alt="Fundo"
+    class="absolute inset-0 w-full h-full object-cover opacity-70"
+  />
+  <div class="absolute inset-0 bg-black bg-opacity-90"></div>
+  <div class="relative w-full max-w-sm bg-slate-950 rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-bold text-yellow-500 text-center mb-4">Crie sua Conta</h2>
+    <p class="text-sm text-white text-center mb-4">
+      Ganhe <span class="text-yellow-400">R$5</span> de desconto no seu primeiro corte agendado!
+    </p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-4">
+      <!-- Campo Nome de Usuário -->
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-300">Nome de Usuário</label>
+        <input
+          id="username"
+          formControlName="username"
+          class="w-full mt-1 px-4 py-2 border rounded-lg bg-slate-800 text-gray-300"
+          [ngClass]="{ 'border-red-500': registerForm.get('username')?.invalid && registerForm.get('username')?.touched }"
+          placeholder="Seu nome"
+        />
+        <small *ngIf="registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched" class="text-red-500">O nome é obrigatório.</small>
+        <small *ngIf="registerForm.get('username')?.hasError('minlength') && registerForm.get('username')?.touched" class="text-red-500">O nome deve ter pelo menos 3 caracteres.</small>
+      </div>
+
+      <!-- Campo Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+        <input
+          id="email"
+          formControlName="email"
+          class="w-full mt-1 px-4 py-2 border rounded-lg bg-slate-800 text-gray-300"
+          [ngClass]="{ 'border-red-500': registerForm.get('email')?.invalid && registerForm.get('email')?.touched }"
+          placeholder="seuemail@exemplo.com"
+        />
+        <small *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched" class="text-red-500">O email é obrigatório.</small>
+        <small *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched" class="text-red-500">Insira um email válido.</small>
+      </div>
+
+      <!-- Campo Senha -->
+      <div class="relative">
+        <label for="password" class="block text-sm font-medium text-gray-300">Senha</label>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          id="password"
+          formControlName="password"
+          class="w-full mt-1 px-4 py-2 border rounded-lg bg-slate-800 text-gray-300"
+          [ngClass]="{ 'border-red-500': registerForm.get('password')?.invalid && registerForm.get('password')?.touched }"
+          placeholder="********"
+        />
+        <button
+          type="button"
+          (click)="togglePasswordVisibility()"
+          class="absolute bottom-3 right-3 text-gray-400 hover:text-yellow-500"
+        >
+          <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+        </button>
+        <small *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched" class="text-red-500">A senha é obrigatória.</small>
+        <small *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched" class="text-red-500">A senha deve ter pelo menos 6 caracteres.</small> <br>
+        <small *ngIf="registerForm.get('password')?.hasError('pattern') && registerForm.get('password')?.touched" class="text-red-500">A senha deve conter letras e números.</small>
+      </div>
+
+
+      <button
+        type="submit"
+        class="w-full bg-yellow-500 text-black py-2 rounded-lg hover:bg-yellow-600 transition"
+      >
+        Registrar
+      </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-300 mt-4">
+      Já tem uma conta?
+      <a (click)="goToLogin()" class="text-yellow-500 hover:underline cursor-pointer">Faça login</a>
+    </p>
+  </div>
+
+  <!-- Modal -->
+  <div
+    *ngIf="showPopup"
+    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70"
+  >
+    <div class="bg-slate-950 rounded-lg shadow-lg p-6 text-center w-80">
+      <h3 class="text-xl font-bold text-yellow-500 mb-4">Já possui conta?</h3>
+      <div class="space-x-4">
+        <button
+          class="bg-yellow-500 text-black py-2 px-4 rounded-lg hover:bg-yellow-600 transition"
+          (click)="goToLogin()"
+        >
+          Sim
+        </button>
+        <button
+          class="bg-gray-700 text-gray-300 py-2 px-4 rounded-lg hover:bg-gray-600 transition"
+          (click)="closePopup()"
+        >
+          Não
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
