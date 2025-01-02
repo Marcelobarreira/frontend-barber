@@ -62,7 +62,6 @@ export class RegisterComponent {
         next: (response) => {
           alert('Registro bem-sucedido!');
           this._router.navigate(['/login']); // Redireciona para o login
-          console.log('Registro bem-sucedido:', response);
         },
         error: (error) => {
           alert('Erro ao registrar. Tente novamente.');

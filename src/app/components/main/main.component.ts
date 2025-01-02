@@ -1,33 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HorariosService } from '../../services/horarios/horarios.service';
+
+import { CommonModule } from '@angular/common';
+import { AgendamentosComponent } from './components/agendamentos/agendamentos.component';
+import { HeaderComponent } from "../header/header.component";
+import { FaturamentoHojeComponent } from './components/faturamento-hoje/faturamento-hoje.component';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, HeaderComponent, AgendamentosComponent, FaturamentoHojeComponent],
   templateUrl: './main.component.html',
-  styleUrl: './main.component.scss'
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  horarios: string[] = [
-    '09:00 - 09:30',
-    '09:30 - 10:00',
-    '10:00 - 10:30',
-    '10:30 - 11:00',
-    '11:00 - 11:30',
-    '14:00 - 14:30',
-    '14:30 - 15:00',
-    '15:00 - 15:30',
-    '15:30 - 16:00',
-  ];
+  agendamentos: any[] = [];
 
-  constructor(private _router: Router) {}
+  constructor(private router: Router, private horariosService: HorariosService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.carregarAgendamentos();
+  }
 
+  carregarAgendamentos(): void {
+    this.horariosService.listarAgendamentos().subscribe(
+      (response) => {
+        this.agendamentos = response.agendamentos || [];
+      },
+      (error) => {
+        console.error('Erro ao carregar agendamentos:', error);
+      }
+    );
+  }
 
   logout(): void {
     localStorage.clear();
-    this._router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 }
