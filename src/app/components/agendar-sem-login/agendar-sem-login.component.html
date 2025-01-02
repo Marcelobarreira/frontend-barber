@@ -1,48 +1,78 @@
-<div class="relative min-h-screen bg-black text-white p-6">
-  <!-- Cabeçalho -->
-  <div class="fixed top-0 left-0 w-full bg-slate-950 shadow-md p-4 flex justify-between items-center z-50">
-    <img src="assets/logoze.jpg" alt="Logo" class="h-10">
-    <button
-      *ngIf="isUserLoggedIn"
-      class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-      (click)="navigateToMinhasReservas()"
-    >
-      Minhas Reservas
-    </button>
-  </div>
+<div class="relative min-h-screen flex flex-col bg-black text-white">
+  <!-- Imagem de fundo -->
+  <img
+    src="assets/fundo2.png"
+    alt="Fundo"
+    class="absolute inset-0 w-full h-full object-cover"
+  />
 
-  <!-- Conteúdo Principal -->
-  <div class="mt-16 w-full max-w-3xl mx-auto bg-slate-800 rounded-lg p-6">
-    <!-- Introdução -->
-    <div class="text-center mb-6">
-      <h1 class="text-xl font-bold text-red-500 mb-2">Bem vindo a</h1>
-      <h2 class="text-2xl font-extrabold text-gray-100">
-        Barbearia Zé Cortes
-      </h2>
+  <!-- Sobreposição escura -->
+  <div class="absolute inset-0 bg-black opacity-80"></div>
+
+  <!-- Conteúdo principal -->
+  <div class="relative z-10 p-6">
+    <!-- Cabeçalho -->
+    <div class="fixed top-0 left-0 w-full bg-transparent  p-4 flex justify-between items-center z-50">
+      <!-- Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="assets/logoze.jpg" alt="Logo" class="h-14 w-14 object-cover rounded-lg">
+        <span class="text-xl font-bold text-white">Barbearia Zé Cortes</span>
+      </div>
+
+      <!-- Botão de Minhas Reservas -->
+      <button
+        *ngIf="isUserLoggedIn"
+        class="bg-red-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-red-700 transition"
+        (click)="navigateToMinhasReservas()"
+      >
+        Minhas Reservas
+      </button>
     </div>
 
-    <!-- Lista de Serviços -->
-    <h3 class="text-lg font-bold text-red-500 mb-4">Serviços</h3>
-    <div class="space-y-4">
-      <div
-        *ngFor="let servico of servicos"
-        class="bg-slate-700 text-gray-300 p-4 rounded-lg flex justify-between items-center"
-      >
-        <div>
-          <h4 class="text-lg font-semibold">{{ servico.nome }}</h4>
-          <p class="text-sm flex items-center mt-1">
-            <i class="fas fa-clock mr-2 text-red-400"></i>{{ servico.duracao }}
-          </p>
-          <p class="text-sm flex items-center mt-1">
-            <i class="fas fa-dollar-sign mr-2 text-red-400"></i>from {{ servico.preco }}
-          </p>
-        </div>
-        <button
-          (click)="agendarServico(servico.nome)"
-          class="bg-red-500 text-white py-2 px-2 rounded-lg hover:bg-red-600 flex items-center"
+
+    <!-- Conteúdo Principal -->
+    <div class="mt-16 w-full max-w-3xl mx-auto  rounded-lg p-6">
+      <!-- Introdução -->
+      <div class="text-center mb-6">
+        <h1 class="text-xl font-bold text-red-500 mb-2">Bem vindo a</h1>
+        <h2 class="text-2xl font-extrabold text-gray-100">
+          Barbearia Zé Cortes
+        </h2>
+      </div>
+
+      <!-- Lista de Serviços -->
+      <h3 class="text-lg font-bold text-red-500 mb-4">Serviços</h3>
+      <div class="space-y-4">
+        <div
+          *ngFor="let servico of servicos"
+          class="bg-black text-gray-300 p-4 rounded-3xl flex flex-col"
         >
-          <i class="fas fa-calendar-alt mr-2"></i> Agendar
-        </button>
+          <div class="flex items-center mb-4">
+            <!-- Imagem quadrada -->
+            <img
+              [src]="servico.imagem"
+              alt="{{ servico.nome }}"
+              class="w-24 h-24 object-cover rounded-lg mr-4"
+            />
+            <!-- Texto ao lado da imagem -->
+            <div>
+              <h4 class="text-md font-semibold">{{ servico.nome }}</h4>
+              <p class="text-sm flex items-center mt-1">
+                <i class="fas fa-clock mr-2 text-white"></i>{{ servico.duracao }}
+              </p>
+              <p class="text-sm flex items-center mt-1">
+                <i class="fas fa-dollar-sign mr-2 text-green-500"></i>{{ servico.preco }}
+              </p>
+            </div>
+          </div>
+          <!-- Botão de agendamento abaixo -->
+          <button
+            (click)="agendarServico(servico.nome)"
+            class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 flex items-center justify-center w-full"
+          >
+            <i class="fas fa-calendar-alt mr-2"></i> Agendar
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -18,26 +18,25 @@ export class AgendarSemLoginComponent {
       nome: 'CORTE',
       duracao: '30min',
       preco: 'R$ 30,00',
+      imagem: 'assets/corte-cabelo.jpg',
     },
     {
       nome: 'BARBA',
       duracao: '20min',
       preco: 'R$ 20,00',
+      imagem: 'assets/barba.png',
     },
     {
       nome: 'CORTE + BARBA',
       duracao: '50min',
       preco: 'R$ 45,00',
-    },
-    {
-      nome: 'CORTE + BARBA + SOBRANCELHA',
-      duracao: '1h:00min',
-      preco: 'R$ 60,00',
+      imagem: 'assets/platinado.png',
     },
     {
       nome: 'CORTE + SOBRANCELHA',
       duracao: '40min',
       preco: 'R$ 40,00',
+      imagem: 'assets/corte-cabelo.jpg',
     },
   ];
 
