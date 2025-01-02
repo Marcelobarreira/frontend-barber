@@ -14,5 +14,8 @@ export class BemvindoComponent {
   goToRegister() {
     this._router.navigate(['/agendar-sl']);
   }
+  goToPortal() {
+    this._router.navigate(['/login']);
+  }
 
 }

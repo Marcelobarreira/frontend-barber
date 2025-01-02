@@ -9,8 +9,9 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     const token = localStorage.getItem('jwt-token');
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
-    if (token) {
+    if (token && isAdmin) {
       return true;
     }
 
