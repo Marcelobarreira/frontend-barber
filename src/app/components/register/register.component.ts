@@ -79,6 +79,9 @@ export class RegisterComponent {
     }
   }
 
+  irHome() {
+    this._router.navigate(['/bem-vindo']);
+  }
 
   goToLogin(): void {
     this._router.navigate(['/login']);

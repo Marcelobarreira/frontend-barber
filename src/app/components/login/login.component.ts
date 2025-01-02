@@ -48,7 +48,12 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userName', userName);
           localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
 
-          this._router.navigateByUrl('/main');
+          if (isAdmin) {
+            this._router.navigateByUrl('/main');
+          } else {
+            this._router.navigateByUrl('/cliente');
+          }
+
           this.loading = false;
         },
         (error) => {
@@ -57,9 +62,13 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         },
       );
-
     }
   }
+
+  irHome() {
+    this._router.navigate(['/bem-vindo']);
+  }
+
 
 
   goToRegister() {
