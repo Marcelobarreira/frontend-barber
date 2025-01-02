@@ -25,6 +25,7 @@ export class DatasDisponiveisComponent implements OnInit {
   telefone: string = '';
   horarioSelecionado: string = '';
   servicoSelecionado: string = '';
+  loading: boolean = false;
 
   constructor(
     private router: Router,
@@ -77,8 +78,9 @@ export class DatasDisponiveisComponent implements OnInit {
       return;
     }
 
-    // Validação do telefone (verifica se segue o padrão de 11 dígitos com máscara)
-    const telefoneSemMascara = this.telefone.replace(/\D/g, ''); // Remove caracteres não numéricos
+    this.loading = true;
+
+    const telefoneSemMascara = this.telefone.replace(/\D/g, '');
     if (telefoneSemMascara.length !== 11) {
       alert('Por favor, insira um número de telefone válido com DDD.');
       return;
@@ -100,11 +102,13 @@ export class DatasDisponiveisComponent implements OnInit {
 
     this.horariosService.marcarHorario(agendamento).subscribe(
       () => {
+        this.loading = false;
         localStorage.setItem('agendamento', JSON.stringify(agendamento));
         this.closeModal();
         this.router.navigate(['/confirmacao']);
       },
       (error) => {
+        this.loading = false;
         console.error('Erro ao marcar horário:', error);
         alert('Erro ao marcar horário.');
       }

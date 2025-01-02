@@ -1,5 +1,15 @@
 <div class="relative min-h-screen flex flex-col bg-black text-white">
   <!-- Imagem de fundo -->
+
+  <div
+  *ngIf="loading"
+  class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+>
+  <div class="text-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-white mx-auto mb-4"></div>
+    <p class="text-white text-lg font-semibold">Aguarde...</p>
+  </div>
+</div>
   <img
     src="assets/fundo2.png"
     alt="Fundo"
