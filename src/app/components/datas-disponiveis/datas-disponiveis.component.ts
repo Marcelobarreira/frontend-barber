@@ -71,7 +71,20 @@ export class DatasDisponiveisComponent implements OnInit {
   }
 
   confirmarAgendamento(): void {
-    if (!this.selectedDate || !this.horarioSelecionado || !this.nome || !this.telefone) {
+    // Validação do nome
+    if (!this.nome.trim() || this.nome.split(' ').length < 2) {
+      alert('Por favor, insira seu nome completo (Nome e Sobrenome).');
+      return;
+    }
+
+    // Validação do telefone (verifica se segue o padrão de 11 dígitos com máscara)
+    const telefoneSemMascara = this.telefone.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (telefoneSemMascara.length !== 11) {
+      alert('Por favor, insira um número de telefone válido com DDD.');
+      return;
+    }
+
+    if (!this.selectedDate || !this.horarioSelecionado || !this.servicoSelecionado) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
@@ -81,8 +94,8 @@ export class DatasDisponiveisComponent implements OnInit {
       data,
       horario: this.horarioSelecionado,
       servico: this.servicoSelecionado,
-      usuario: this.nome,
-      telefone: this.telefone,
+      usuario: this.nome.trim(),
+      telefone: telefoneSemMascara,
     };
 
     this.horariosService.marcarHorario(agendamento).subscribe(
@@ -97,6 +110,7 @@ export class DatasDisponiveisComponent implements OnInit {
       }
     );
   }
+
 
   selectHorario(horario: string): void {
     this.horarioSelecionado = horario;
