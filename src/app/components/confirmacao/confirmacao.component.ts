@@ -32,7 +32,7 @@ export class ConfirmacaoComponent implements OnInit {
   }
 
   novaReserva(): void {
-    this.router.navigate(['/agendar-sem-login']);
+    this.router.navigate(['/agendar-sl']);
   }
 
   verReservas(): void {
