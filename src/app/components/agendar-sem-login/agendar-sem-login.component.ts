@@ -7,12 +7,14 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './agendar-sem-login.component.html',
-  styleUrl: './agendar-sem-login.component.scss'
+  styleUrls: ['./agendar-sem-login.component.scss'],
 })
 export class AgendarSemLoginComponent {
-  isUserLoggedIn: boolean = false;
+  showModalReservas: boolean = false;
+  reserva: any = null;
 
-  constructor(private Router: Router) {}
+  constructor(private router: Router) {}
+
   servicos = [
     {
       nome: 'CORTE',
@@ -40,19 +42,33 @@ export class AgendarSemLoginComponent {
     },
   ];
 
-  ngOnInit(): void {}
-
-  checkLoginStatus(): void {
-    const token = localStorage.getItem('token');
-    this.isUserLoggedIn = !!token;
+  irHome(): void {
+    this.router.navigate(['/bem-vindo']);
   }
 
-  navigateToMinhasReservas(): void {
-    this.Router.navigate(['/minhas-reservas']);
+  abrirModalReservas(): void {
+    const agendamentoData = localStorage.getItem('agendamento');
+    this.reserva = agendamentoData ? JSON.parse(agendamentoData) : null;
+    this.showModalReservas = true;
+  }
+
+  fecharModalReservas(): void {
+    this.showModalReservas = false;
+  }
+
+  fecharModalFora(event: MouseEvent): void {
+    this.showModalReservas = false;
   }
 
   agendarServico(servico: string): void {
-    this.Router.navigate(['/datas-disponiveis'], { queryParams: { servico } });
+    this.router.navigate(['/datas-disponiveis'], { queryParams: { servico } });
   }
-
+  formatarTelefone(telefone: string): string {
+    const regex = /(\d{2})(\d{5})(\d{4})/;
+    const match = telefone.match(regex);
+    if (match) {
+      return `(${match[1]}) ${match[2]}-${match[3]}`;
+    }
+    return telefone;
+  }
 }

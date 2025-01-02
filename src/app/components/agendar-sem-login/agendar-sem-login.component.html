@@ -12,18 +12,17 @@
   <!-- Conteúdo principal -->
   <div class="relative z-10 p-6">
     <!-- Cabeçalho -->
-    <div class="fixed top-0 left-0 w-full bg-transparent  p-4 flex justify-between items-center z-50">
+    <div  class="fixed top-0 left-0 w-full bg-transparent p-4 flex justify-between items-center z-50">
       <!-- Logo -->
       <div class="flex items-center space-x-3">
-        <img src="assets/logoze.jpg" alt="Logo" class="h-14 w-14 object-cover rounded-lg">
+        <img (click)="irHome()" src="assets/logoze.jpg" alt="Logo" class="h-14 w-14 object-cover rounded-lg" />
         <span class="text-xl font-bold text-white">Barbearia Zé Cortes</span>
       </div>
 
       <!-- Botão de Minhas Reservas -->
       <button
-        *ngIf="isUserLoggedIn"
-        class="bg-red-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-red-700 transition"
-        (click)="navigateToMinhasReservas()"
+        class="bg-red-600 text-white py-1 px-1 rounded-lg font-sans text-sm hover:bg-red-700 transition"
+        (click)="abrirModalReservas()"
       >
         Minhas Reservas
       </button>
@@ -77,3 +76,80 @@
     </div>
   </div>
 </div>
+
+<div
+  *ngIf="showModalReservas"
+  class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+  (click)="fecharModalReservas()"
+>
+  <div
+    class="bg-slate-900 p-8 rounded-xl shadow-lg max-w-md w-80"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Título -->
+    <h2 class="text-xl font-extrabold text-red-500 mb-6 text-center border-b border-gray-700 pb-4">
+      Minhas Reservas
+    </h2>
+
+    <!-- Conteúdo -->
+    <div *ngIf="reserva" class="text-white space-y-4">
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-cut text-red-500 text-lg"></i>
+        <p class="flex-1">
+          <span class="font-semibold text-gray-300">Serviço:</span>
+          {{ reserva.servico }}
+        </p>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-calendar-alt text-blue-500 text-lg"></i>
+        <p class="flex-1">
+          <span class="font-semibold text-gray-300">Data:</span>
+          {{ reserva.data | date: 'dd/MM/yyyy' }}
+        </p>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-clock text-yellow-500 text-lg"></i>
+        <p class="flex-1">
+          <span class="font-semibold text-gray-300">Hora:</span>
+          {{ reserva.horario }}
+        </p>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-user text-green-500 text-lg"></i>
+        <p class="flex-1">
+          <span class="font-semibold text-gray-300">Cliente:</span>
+          {{ reserva.usuario }}
+        </p>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-phone text-purple-500 text-lg"></i>
+        <p class="flex-1">
+          <span class="font-semibold text-gray-300">Telefone:</span>
+          {{ formatarTelefone(reserva.telefone) }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Mensagem de sem reservas -->
+    <div *ngIf="!reserva" class="text-center text-gray-400 mt-6">
+      Você ainda não possui reservas.
+    </div>
+
+    <!-- Botão -->
+    <div class="flex justify-end mt-6">
+      <button
+        class="bg-red-600 text-white py-2 px-6 rounded-lg font-bold hover:bg-red-700 transition"
+        (click)="fecharModalReservas()"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
