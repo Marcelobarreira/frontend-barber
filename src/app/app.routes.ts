@@ -4,11 +4,23 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { BemvindoComponent } from './components/bemvindo/bemvindo.component';
 import { AuthGuard } from './guards/auth-guard.guard';
+import { AgendarSemLoginComponent } from './components/agendar-sem-login/agendar-sem-login.component';
+import { DatasDisponiveisComponent } from './components/datas-disponiveis/datas-disponiveis.component';
+import { ConfirmacaoComponent } from './components/confirmacao/confirmacao.component';
 
 export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  { path: 'datas-disponiveis', component: DatasDisponiveisComponent },
+  {
+    path: 'agendar-sl',
+    component: AgendarSemLoginComponent,
+  },
+  {
+    path: 'confirmacao',
+    component: ConfirmacaoComponent,
   },
   {
     path: 'bem-vindo',

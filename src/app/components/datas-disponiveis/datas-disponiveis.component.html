@@ -1,0 +1,110 @@
+<div class="relative min-h-screen bg-black text-white p-6">
+  <!-- Cabeçalho -->
+  <div class="fixed top-0 left-0 w-full bg-slate-950 shadow-md p-4 flex justify-between items-center z-50">
+    <img src="assets/logoze.jpg" alt="Logo" class="h-10">
+    <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600" (click)="goBack()">
+      Voltar
+    </button>
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <div class="mt-16 w-full max-w-4xl mx-auto bg-slate-800 rounded-lg p-6">
+    <h2 class="text-xl font-bold text-red-500 text-center mb-6">Escolha uma Data e Horário</h2>
+
+    <!-- Calendário -->
+    <div class="mb-6">
+      <div class="flex items-center justify-between">
+        <button
+          class="bg-gray-700 text-white px-3 py-1 rounded hover:bg-gray-600"
+          (click)="goToPreviousWeek()"
+        >
+          &lt;
+        </button>
+        <h3 class="text-lg font-bold text-gray-100 text-center">{{ currentMonthYear }}</h3>
+        <button
+          class="bg-gray-700 text-white px-3 py-1 rounded hover:bg-gray-600"
+          (click)="goToNextWeek()"
+        >
+          &gt;
+        </button>
+      </div>
+      <div class="grid grid-cols-7 gap-2 mt-4 text-center">
+        <div *ngFor="let day of diasSemana" class="text-sm font-bold text-gray-400">{{ day }}</div>
+        <div
+          *ngFor="let date of dias"
+          (click)="selectDate(date)"
+          [ngClass]="{
+            'bg-red-500 text-white': date === selectedDate,
+            'bg-slate-700 text-gray-300': date !== selectedDate
+          }"
+          class="p-2 rounded-lg cursor-pointer hover:bg-red-500"
+        >
+          {{ date | date: 'dd' }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Horários -->
+    <div>
+      <h3 class="text-lg font-bold text-gray-100 text-center">Selecione um Horário</h3>
+      <div class="grid grid-cols-4 gap-2 mt-4 text-center">
+        <div
+          *ngFor="let horario of horarios"
+          (click)="selectHorario(horario)"
+          class="p-2 rounded-lg bg-slate-700 text-gray-300 hover:bg-red-500 cursor-pointer"
+        >
+          {{ horario }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+  *ngIf="showModal"
+  class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+>
+  <div class="bg-slate-800 p-6 rounded-lg max-w-sm w-full">
+    <h2 class="text-lg font-bold text-red-500 mb-4 text-center">Confirme seu Agendamento</h2>
+    <p class="text-sm text-gray-300 mb-4">
+      Serviço selecionado: <span class="font-bold text-white">{{ servicoSelecionado }}</span>
+    </p>
+    <div class="mb-4">
+      <label for="nome" class="block text-sm font-medium text-gray-300">Nome</label>
+      <input
+        id="nome"
+        [(ngModel)]="nome"
+        type="text"
+        class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-slate-700 text-white"
+        placeholder="Nome Sobrenome"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="telefone" class="block text-sm font-medium text-gray-300">Telefone</label>
+      <input
+        id="telefone"
+        [(ngModel)]="telefone"
+        [mask]="'(00) 00000-0000'"
+        type="text"
+        class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-slate-700 text-white"
+        placeholder="Seu Telefone"
+      />
+    </div>
+    <div class="flex justify-end space-x-2">
+      <button
+        class="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700"
+        (click)="closeModal()"
+      >
+        Cancelar
+      </button>
+      <button
+        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+        (click)="confirmarAgendamento()"
+      >
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>
+
+</div>

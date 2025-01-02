@@ -12,7 +12,7 @@ export class BemvindoComponent {
   constructor(private _router: Router) {}
 
   goToRegister() {
-    this._router.navigate(['/register']);
+    this._router.navigate(['/agendar-sl']);
   }
 
 }
